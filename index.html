@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #222;
+            --secondary-color: #262626;
+            --accent-color: #ff3232;
+            --text-color: #e6e6e6;
+            --text-secondary: #cecece;
+            --card-bg: #2e2e2ecc;
+            --card-hover: #2e2e2ecc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgb(22 22 22 / 80%);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 0.5rem 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--text-color);
+            margin-left: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid var(--accent-color);
+            object-fit: cover;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 20px rgb(255 100 100 / 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+                box-shadow: 0 0 20px #ff2c2c80;
+            }
+            50% {
+                transform: translateY(-15px);
+                box-shadow: 0 0 30px #ff2c2c80;
+            }
+            100% {
+                transform: translateY(0px);
+                box-shadow: 0 0 20px #ff2c2c80;
+            }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards 0.7s;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards 0.9s;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--accent-color);
+            box-shadow: 0 0 15px #ff2c2c80;
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgb(255 100 100 / 10%);
+            box-shadow: 0 0 15px rgb(255 100 100 / 30%);
+            transform: translateY(-3px);
+        }
+
+        .btn i {
+            margin-right: 0.5rem;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            animation: fadeIn 1s ease forwards 1.2s, bounce 2s infinite;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .featured-section {
+            padding: 6rem 3rem;
+            background-color: var(--primary-color);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+
+        .title-container {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            position: relative;
+        }
+
+        .project-card.animate {
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgb(0 0 0 / 50%);
+            background-color: var(--card-hover);
+        }
+
+        .project-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+        }
+
+        .project-category {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .project-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .view-all {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .skills-section {
+            padding: 6rem 3rem;
+            background-color: var(--secondary-color);
+        }
+
+        .skills-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 200px;
+            text-align: center;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .skill-card.animate {
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgb(0 0 0 / 50%);
+            background-color: var(--card-hover);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .skill-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-level {
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            padding: 4rem 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: center;
+        }
+
+        #contact .footer-content .btn-secondary {
+          margin-right: 16px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 30px;
+            border: none;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            padding-right: 3rem;
+        }
+
+        .search-input:focus {
+            box-shadow:0 0 15px rgb(255 26 26 / 52%);
+            background-color: var(--card-hover);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            color: var(--accent-color);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            border: 2px solid var(--card-bg);
+            background-color: transparent;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+<<<<<<< Updated upstream
+            header {
+                padding: 1rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background-color: var(--secondary-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease;
+                z-index: 1001;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 1.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+                width: 30px;
+                height: 20px;
+                position: relative;
+                cursor: pointer;
+                z-index: 1002;
+            }
+            
+            .hamburger span {
+                display: block;
+                position: absolute;
+                height: 3px;
+                width: 100%;
+                background-color: var(--text-color);
+                border-radius: 3px;
+                opacity: 1;
+                left: 0;
+                transition: all 0.3s ease;
+            }
+            
+            .hamburger span:nth-child(1) {
+                top: 0;
+            }
+            
+            .hamburger span:nth-child(2), .hamburger span:nth-child(3) {
+                top: 8px;
+            }
+            
+            .hamburger span:nth-child(4) {
+                top: 16px;
+            }
+            
+            .hamburger.active span:nth-child(1), .hamburger.active span:nth-child(4) {
+                width: 0%;
+                left: 50%;
+                opacity: 0;
+            }
+            
+            .hamburger.active span:nth-child(2) {
+                transform: rotate(45deg);
+            }
+            
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg);
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .featured-section, .skills-section {
+                padding: 4rem 1.5rem;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skill-card {
+                width: 100%;
+                max-width: 300px;
+            }
+=======
+          header {
+            padding: 1rem;
+          }
+          
+          .logo {
+            font-size: 1.6rem;
+          }
+          
+          .hero h1 {
+            font-size: 2.5rem;
+          }
+          
+          .featured-section, .skills-section {
+            padding: 4rem 1.5rem;
+          }
+            
+          .project-grid {
+            grid-template-columns: 1fr;
+          }
+            
+          .skill-card {
+            width: 100%;
+            max-width: 176px;
+          }
+
+          .skills-container {
+            max-width: 420px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+          }
+
+          .footer-content {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+          }
+
+          #contact .footer-content .btn-secondary {
+            margin-bottom: 16px;
+          }
+>>>>>>> Stashed changes
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <header>
+<<<<<<< Updated upstream
+        <a href="Portfolio_home.html" class="logo"><i class="fas fa-code"></i> <span>Portfolio</span></a>
+=======
+<<<<<<<< Updated upstream:Portfolio_home.html
+        <a href="Portfolio_home.html" class="logo"><i class="fas fa-code"></i> <span>Portfolio</span></a>
+========
+        <a href="index.html" class="logo"><i class="fas fa-code"></i> <span>Portfolio</span></a>
+>>>>>>>> Stashed changes:index.html
+>>>>>>> Stashed changes
+    </header>
+
+    <main>
+        <section class="hero">
+<<<<<<< Updated upstream
+          <img src="https://lh3.googleusercontent.com/fife/ALs6j_EZXOVxFzZAgj608aerWmF1n-_aWf5DtiiOKHZ3Ks-i7u1FH-YQztXiZ-tWdclwoGngZswVWobucv8duDXu0VjHN6rYYg9rg4jUQI-iy9tHsPjGQEJZBK3laUEWDWTspydldlzIHUvja1H8JO7pD0IsdP8fnwDkLFYZu-OZfpiT2VpnPIdlgdhI4n3BGuh_BDKp4u7bs9VKrmL8x64A1aiFVrLJj_2e2bIfC59Ymw4bz349iaEJ4wFh94UbqzoB4Dwy3F08itQ8_HGbByWvhhvSZ-hnRG43m3PnQXFN-JMJo3nXcZAsFu4meeiV0NyBoFfOITrlBxdh3uVzga6AbdB31YvZwJ91Mwn29X0TUhIIoly3DUUcdWHs7JyBXNxiROzuIfwF1tzt065Dz8p98iysNbquFR78dGG7zUtT9Yfo60eRrRUD5irjYZP4eoVZ4yXNMaE6JuGdhQKRJKejYACo2YpD8rHaGiQ2gwmeOhDmgdW8DKkJ0ZVNnCTbdhvtCF8UNdzsS_qmTokiQJyjiW_UI-3Y-RlYPAYpNqqr36w8Qv8VaxzspB5UUn9FUGjVPKHiSkeNMSusdOh-iKmr0MSQLbApstcQQ7iXr-qWJnl3nZHfz2y_b5b81udDrUoVO1LEIB-9Xrmgmfl1gfk4wFyy9A_1jBBTM6okAG8UrCkIYrCcMOZi_vJiqGVnKjoeMUngFfTkr53wuG3aCOqlDQw1e-xCu3wwbztQQh1FgPEoRPPxiKJNtR3JP6-C3IvZjwlYZhjCI0OMLYRuTvmWkBkhqZy4m9SEG-EdjnWNHk3g9K3TmC1V3qsLKFgmvSVSblrIF30dsKBLGf9CGtZ3VJm9WmNhWFpfC9JhN5wfSx1G7cjDI1I3I2Fra53ByUk_Hqq0zApGHYI4lFlDKcfXfh5Gm6br5dQSNU30ej6UEw-8ItwXqrXZ_N1o-tYhbxa7MpgCLZ_upcXielme7eD8XX3U9wz8MKOR57iJggaLVPeUNeOCtBu3saAtaZOPKDUHGsOUI1YaOLTOrtoPoiYxYcYgYbNaxGoIDFnfbgXdE2HzfOWI8h6WIXI2OqVJMwiWWPiG__vpI8MfjozPuBbhqMkF7MDy1BdJrX_uCyJGzB6Ke3q5Rtjzq5mqfSLEP9TthNO9uyy27XJbf1jG0aKTu99E-aAYT3b3tRWnlOVwm9xI9gN6vuaPGIR2HWVjkmmDFxfjZgl0VPnHabVtX7lMXAXujToqmgJZsc8F6xR1Xv1v7dsj-8cyxIkb3nbW7pxi-UqUG5prI9SaV_XSpNzqQeZOnLcOzZFf4awHThBc6V1_1ZNJiyQFxTtl5DR4QGVwa0mVXmOggKQsgdFeDGLNLg0kQGeLSH3cLf7_LcvMDB9bdtfhP8KE5HQUOaQJIW8C9mtXrU42jNQMn355TNY7paO8aY3WAou4DD8pnipgDe4zQqvBMJ4aydEKiQO3xhoSexrlrOuUVezvKmwn0w1lc-TzEMMIVJRGdGSxaB-X8Nnk_UiG0Ib6r5YuzRuyUw6PCu_2yU5HyyG16Uudyjf-IjXTW9cE4ehYMB95OzG0310ZwAGtIr7ifAqBCi6I4KyoEMC8QSqVxRLUWcyIegUahN2ailHl3RvdK8qNt8405kLl3Qv8itW9Y18yhTlBULYyYfE9ODLIoOcNej2BlPxNbBu3ueI=w1876-h973" alt="Профіль" class="profile-img">
+=======
+          <img src="https://lh3.googleusercontent.com/fife/ALs6j_EZXOVxFzZAgj608aerWmF1n-_aWf5DtiiOKHZ3Ks-i7u1FH-YQztXiZ-tWdclwoGngZswVWobucv8duDXu0VjHN6rYYg9rg4jUQI-iy9tHsPjGQEJZBK3laUEWDWTspydldlzIHUvja1H8JO7pD0IsdP8fnwDkLFYZu-OZfpiT2VpnPIdlgdhI4n3BGuh_BDKp4u7bs9VKrmL8x64A1aiFVrLJj_2e2bIfC59Ymw4bz349iaEJ4wFh94UbqzoB4Dwy3F08itQ8_HGbByWvhhvSZ-hnRG43m3PnQXFN-JMJo3nXcZAsFu4meeiV0NyBoFfOITrlBxdh3uVzga6AbdB31YvZwJ91Mwn29X0TUhIIoly3DUUcdWHs7JyBXNxiROzuIfwF1tzt065Dz8p98iysNbquFR78dGG7zUtT9Yfo60eRrRUD5irjYZP4eoVZ4yXNMaE6JuGdhQKRJKejYACo2YpD8rHaGiQ2gwmeOhDmgdW8DKkJ0ZVNnCTbdhvtCF8UNdzsS_qmTokiQJyjiW_UI-3Y-RlYPAYpNqqr36w8Qv8VaxzspB5UUn9FUGjVPKHiSkeNMSusdOh-iKmr0MSQLbApstcQQ7iXr-qWJnl3nZHfz2y_b5b81udDrUoVO1LEIB-9Xrmgmfl1gfk4wFyy9A_1jBBTM6okAG8UrCkIYrCcMOZi_vJiqGVnKjoeMUngFfTkr53wuG3aCOqlDQw1e-xCu3wwbztQQh1FgPEoRPPxiKJNtR3JP6-C3IvZjwlYZhjCI0OMLYRuTvmWkBkhqZy4m9SEG-EdjnWNHk3g9K3TmC1V3qsLKFgmvSVSblrIF30dsKBLGf9CGtZ3VJm9WmNhWFpfC9JhN5wfSx1G7cjDI1I3I2Fra53ByUk_Hqq0zApGHYI4lFlDKcfXfh5Gm6br5dQSNU30ej6UEw-8ItwXqrXZ_N1o-tYhbxa7MpgCLZ_upcXielme7eD8XX3U9wz8MKOR57iJggaLVPeUNeOCtBu3saAtaZOPKDUHGsOUI1YaOLTOrtoPoiYxYcYgYbNaxGoIDFnfbgXdE2HzfOWI8h6WIXI2OqVJMwiWWPiG__vpI8MfjozPuBbhqMkF7MDy1BdJrX_uCyJGzB6Ke3q5Rtjzq5mqfSLEP9TthNO9uyy27XJbf1jG0aKTu99E-aAYT3b3tRWnlOVwm9xI9gN6vuaPGIR2HWVjkmmDFxfjZgl0VPnHabVtX7lMXAXujToqmgJZsc8F6xR1Xv1v7dsj-8cyxIkb3nbW7pxi-UqUG5prI9SaV_XSpNzqQeZOnLcOzZFf4awHThBc6V1_1ZNJiyQFxTtl5DR4QGVwa0mVXmOggKQsgdFeDGLNLg0kQGeLSH3cLf7_LcvMDB9bdtfhP8KE5HQUOaQJIW8C9mtXrU42jNQMn355TNY7paO8aY3WAou4DD8pnipgDe4zQqvBMJ4aydEKiQO3xhoSexrlrOuUVezvKmwn0w1lc-TzEMMIVJRGdGSxaB-X8Nnk_UiG0Ib6r5YuzRuyUw6PCu_2yU5HyyG16Uudyjf-IjXTW9cE4ehYMB95OzG0310ZwAGtIr7ifAqBCi6I4KyoEMC8QSqVxRLUWcyIegUahN2ailHl3RvdK8qNt8405kLl3Qv8itW9Y18yhTlBULYyYfE9ODLIoOcNej2BlPxNbBu3ueI=w1876-h973" class="profile-img">
+>>>>>>> Stashed changes
+            <h1>David Slobozhenyuk</h1>
+            <p>I am a young enthusiastic programmer with experience in developing websites, PC applications, and Unity games. I have practical skills in creating a full-fledged online store, PC applications, and am also working on a Unity game. I'm looking for growth opportunities in freelancing or a Junior Developer position.</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary"><i class="fas fa-laptop-code"></i>My projects</a>
+                <a href="#contact" class="btn btn-secondary"><i class="fas fa-envelope"></i>Contact</a>
+            </div>
+            <a href="#projects" class="scroll-down">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <section id="projects" class="featured-section">
+            <div class="title-container">
+                <h2 class="section-title">Projects</h2>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search for projects...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+
+                    <script>
+                      // Функція для пошуку проектів
+                      function searchProjects(query) {
+                        const projectCards = document.querySelectorAll('.project-card');
+                        projectCards.forEach(card => {
+                          const title = card.querySelector('h3').textContent.toLowerCase();
+                          if (title.includes(query.toLowerCase())) {
+                            card.style.display = 'block';
+                          } else {
+                            card.style.display = 'none';
+                          }
+                        });
+                      }
+                    
+                      // При кліку на кнопку пошуку викликати функцію пошуку
+                      const searchBtn = document.querySelector('.search-btn');
+                      const searchInput = document.querySelector('.search-input');
+                      searchBtn.addEventListener('click', () => {
+                        const query = searchInput.value;
+                        searchProjects(query);
+                      });
+                    
+                      // При введенні тексту в полі пошуку викликати функцію пошуку
+                      searchInput.addEventListener('input', () => {
+                        const query = searchInput.value;
+                        searchProjects(query);
+                      });
+                    </script>
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Web</button>
+                    <button class="filter-btn">Mobile</button>
+                    <button class="filter-btn">Desktop</button>
+                    <button class="filter-btn">Games</button>
+
+                    <script>
+                      // Функція для фільтрації проектів
+                      function filterProjects(category) {
+                        const projectCards = document.querySelectorAll('.project-card');
+                        projectCards.forEach(card => {
+                          const categorySpan = card.querySelector('.project-category');
+                          if (category === 'All' || categorySpan.textContent.trim() === category.trim()) {
+                            card.style.display = 'block';
+                          } else {
+                            card.style.display = 'none';
+                          }
+                        });
+                      }
+                      // При завантаженні сторінки фільтрувати проекти за Alle
+                      document.addEventListener('DOMContentLoaded', () => {
+                        filterProjects('All');
+                      });
+                      // При кліку на кнопку фільтрації фільтрувати проекти
+                      const filterButtons = document.querySelectorAll('.filter-btn');
+                      filterButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                          const category = button.textContent.trim();
+                          filterProjects(category);
+                          filterButtons.forEach(btn => btn.classList.remove('active'));
+                          button.classList.add('active');
+                        });
+                      });
+                    </script>
+                </div>
+            </div>
+
+            <div class="project-grid">
+                <!-- Проєкт 1 -->
+                <div class="project-card">
+                    <div class="project-img">
+<<<<<<< Updated upstream
+                      <img src="https://c1.wallpaperflare.com/preview/183/568/911/technology-phone-social-media-technology.jpg">
+=======
+<<<<<<<< Updated upstream:Portfolio_home.html
+                      <img src="https://c1.wallpaperflare.com/preview/183/568/911/technology-phone-social-media-technology.jpg">
+========
+                      <img src="https://img.freepik.com/free-psd/3d-rendering-electronics-digital-world-sales_23-2151409040.jpg?t=st=1744391841~exp=1744395441~hmac=7963c9e351f0801ddc264cce597612019eecb850214ad0619a8eb2a5388172ec&w=900">
+>>>>>>>> Stashed changes:index.html
+>>>>>>> Stashed changes
+                    </div>
+                    <span class="project-category">Desktop</span>
+                    <div class="project-content">
+                      <h3>AniUA application</h3>
+                      <p>A project with the ability to watch anime cartoons and anime series.</p>
+                      <div class="project-links">
+                        <a title="C#"><i class="fas fa-hashtag"></i></a>
+                        <a title="SQL"><i class="fa fa-database"></i></a>
+                        <br>
+<<<<<<< Updated upstream
+                        <a href="projects/AniUA/" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+=======
+<<<<<<<< Updated upstream:Portfolio_home.html
+                        <a href="projects/AniUA/" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+========
+                        <a href="projects/AniUA/index.html" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+>>>>>>>> Stashed changes:index.html
+>>>>>>> Stashed changes
+                      </div>
+                    </div>
+                </div>
+
+                <!-- Проєкт 2 -->
+                <div class="project-card">
+                    <div class="project-img">
+<<<<<<< Updated upstream
+                      <img src="https://wallpaper.forfun.com/fetch/73/73dd9ff076dcfe6a416cbe9824344f2b.jpeg">
+=======
+<<<<<<<< Updated upstream:Portfolio_home.html
+                      <img src="https://wallpaper.forfun.com/fetch/73/73dd9ff076dcfe6a416cbe9824344f2b.jpeg">
+========
+                      <img src="https://img.freepik.com/free-psd/3d-rendering-electronics-digital-world-sales_23-2151409028.jpg?t=st=1744391958~exp=1744395558~hmac=140ef981f99f6236dda710cb1b12ab9463636b0deeac4ca41d7b49ffd51aa7a9&w=900">
+>>>>>>>> Stashed changes:index.html
+>>>>>>> Stashed changes
+                    </div>
+                    <span class="project-category">Games</span>
+                    <div class="project-content">
+                      <h3>Game "Adventure of lost legend"</h3>
+                      <p>A 3D Unity game with an open procedurally generated world, with RPG and survival elements.</p>
+                      <div class="project-links">
+                        <a title="C#"><i class="fas fa-hashtag"></i></a>
+                        <a title="Unity"><i class="fab fa-unity"></i></a>
+                        <br>
+<<<<<<< Updated upstream
+                        <a href="projects/AoLL/" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+=======
+<<<<<<<< Updated upstream:Portfolio_home.html
+                        <a href="projects/AoLL/" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+========
+                        <a href="projects/AoLL/index.html" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+>>>>>>>> Stashed changes:index.html
+>>>>>>> Stashed changes
+                      </div>
+                    </div>
+                </div>
+
+                <!-- Проєкт 3 -->
+                <div class="project-card">
+                  <div class="project-img">
+<<<<<<< Updated upstream
+                    <img src="https://lh4.googleusercontent.com/proxy/9ef56ZK9ATtb84ro8lIqqODLJXqOesjJtnYBDNeJ8890XZS9K8o95CL1eEGTGNgCHeirfWPlzg5YtaQOZWMFHWAnerI6LjiVpjBrt8lM">
+=======
+<<<<<<<< Updated upstream:Portfolio_home.html
+                    <img src="https://lh4.googleusercontent.com/proxy/9ef56ZK9ATtb84ro8lIqqODLJXqOesjJtnYBDNeJ8890XZS9K8o95CL1eEGTGNgCHeirfWPlzg5YtaQOZWMFHWAnerI6LjiVpjBrt8lM">
+========
+                    <img src="https://img.freepik.com/free-psd/3d-rendering-shopping-concept_23-2149877656.jpg?t=st=1744392059~exp=1744395659~hmac=2bf5da5cf51dc7d34c64a295d00eb64fb8cd201cdd597b1c47383f7820127f86&w=900">
+>>>>>>>> Stashed changes:index.html
+>>>>>>> Stashed changes
+                  </div>
+                  <span class="project-category">Web</span>
+                  <div class="project-content">
+                    <h3>Online store</h3>
+                    <pre>An online store with full functionality. 
+                      
+                    </pre>
+                    <div class="project-links">
+                      <a title="Html"><i class="fab fa-html5"></i></a>
+                      <a title="CSS"><i class="fab fa-css3"></i></a>
+                      <a title="PhP"><i class="fab fa-php"></i></a>
+                      <a title="SQL"><i class="fa fa-database"></i></a>
+                      <a title="JS"><i class="fab fa-js-square"></i></a>
+                      <a title="jQuery"><i class="fa fa-book"></i></a>
+                      <br>
+<<<<<<< Updated upstream
+                      <a href="projects/DeShop/" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+=======
+<<<<<<<< Updated upstream:Portfolio_home.html
+                      <a href="projects/DeShop/" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+========
+                      <a href="projects/DeShop/index.html" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+>>>>>>>> Stashed changes:index.html
+>>>>>>> Stashed changes
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Майбутні проекти -->
+            </div>
+
+            <div class="view-all">
+                <a href="projects.html" class="btn btn-secondary">View all projects</a>
+            </div>
+        </section>
+
+        <section class="skills-section">
+            <div class="title-container">
+                <h2 class="section-title">My skills</h2>
+            </div>
+
+            <div class="skills-container">
+                <!-- HTML/CSS -->
+                <a href="skill-details.html?skill=html" class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <h3 class="skill-title">HTML & CSS</h3>
+                </a>
+
+                <!-- JavaScript -->
+                <a href="skill-details.html?skill=js" class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <h3 class="skill-title">JavaScript</h3>
+                </a>
+
+                <!-- PHP -->
+                <a href="skill-details.html?skill=php" class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fab fa-php"></i>
+                    </div>
+                    <h3 class="skill-title">PHP</h3>
+                </a>
+
+                <!-- C++ -->
+                <a href="skill-details.html?skill=cpp" class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="skill-title">C++</h3>
+                </a>
+
+                <!-- C# -->
+                <a href="skill-details.html?skill=csharp" class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h3 class="skill-title">C#</h3>
+                </a>
+
+                <!-- Unity -->
+                <a href="skill-details.html?skill=unity" class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fab fa-unity"></i>
+                    </div>
+                    <h3 class="skill-title">Unity</h3>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+<<<<<<< Updated upstream
+=======
+<<<<<<<< Updated upstream:Portfolio_home.html
+>>>>>>> Stashed changes
+        <div class="footer-content">
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=slobozhenyuk.david@gmail.com" class="btn btn-secondary"><i class="fas fa-envelope"></i>Mail</a>
+          <a href="https://github.com/9Simba9" class="btn btn-secondary"><i class="fab fa-github"></i>GitHub</a>
+          <a href="https://www.freelancer.com/u/Simba69?sb=t" class="btn btn-secondary"><i class="fa-solid fa-globe"></i>Freelancer</a>
+        </div>
+    </footer>
+<<<<<<< Updated upstream
+=======
+========
+      <div class="footer-content">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=slobozhenyuk.david@gmail.com" class="btn btn-secondary"><i class="fas fa-envelope"></i>Mail</a>
+        <a href="https://github.com/9Simba9" class="btn btn-secondary"><i class="fab fa-github"></i>GitHub</a>
+        <a href="https://www.instagram.com/9_.d.a.v.i.d._9?utm_source=qr&igsh=MTA3cjg5MGplYW1kaA==" class="btn btn-secondary"><i class="fa-brands fa-instagram"></i>Instagram</a>
+        <a href="https://t.me/Davidos1k" class="btn btn-secondary"><i class="fa-brands fa-telegram"></i>Telegram</a>
+        <a href="https://www.freelancer.com/u/Simba69?sb=t" class="btn btn-secondary"><i class="fa fa-link"></i>Freelancer</a>
+        <a href="https://www.upwork.com/freelancers/~01fe14cf8ad76a3576?mp_source=share" class="btn btn-secondary"><i class="fa fa-link"></i>Upwork</a>
+        <a href="https://www.fiverr.com/s/Aylv09Y" class="btn btn-secondary"><i class="fa fa-link"></i>Fivver</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+>>>>>>>> Stashed changes:index.html
+>>>>>>> Stashed changes
