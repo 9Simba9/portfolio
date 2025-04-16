@@ -3,8 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Назва проєкту | Portfolio</title>
+  <title>AniUA — Desktop App | Portfolio</title>
+  <link rel="stylesheet" href="../style.css"> <!-- Підключи свій CSS, якщо є -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
   <style>
     :root {
       --primary-color: #222;
@@ -651,6 +659,94 @@
       #contact .footer-content .btn-secondary {
         margin-bottom: 16px;
       }
+
+
+      .carousel-cell {
+        max-height: 180px;
+      }
+
+      .carousel-cell.active {
+        transform: scale(1.05);
+      }
+
+      .carousel-btn {
+        font-size: 1.5rem;
+        padding: 0.3rem 0.7rem;
+      }
+    }
+
+
+
+    .carousel {
+      margin: 0 auto;
+      max-width: 90%;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: 260px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .slick-slide {
+      display: inline-block;
+      margin: 10px;
+    }
+
+    .slick-prev,
+    .slick-next {
+      z-index: 10;
+      font-size: 1.5rem;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .slick-prev:hover,
+    .slick-next:hover {
+      background: rgba(0, 0, 0, 0.6);
+      color: var(--text-secondary);
+    }
+
+    .slick-prev:focus, .slick-next:focus {
+      background: rgba(0, 0, 0, 0.35);
+      color: var(--text-secondary);
+    }
+
+    .slick-prev {
+      left: 10px;
+    }
+
+    .slick-next {
+      right: 10px;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+      display: none;
+    }
+
+    .video-container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+
+    .video-container video {
+      width: 100%;
+      max-width: 50rem;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -660,43 +756,83 @@
   </header>
 
   <main style="padding: 6rem 2rem;">
+    <section class="carousel-section">
+      <div class="carousel">
+        <div><img src="img/carousel1.png" alt="Image 1"></div>
+        <div><img src="img/carousel2.png" alt="Image 2"></div>
+        <div><img src="img/carousel3.png" alt="Image 3"></div>
+        <div><img src="img/carousel4.png" alt="Image 4"></div>
+        <div><img src="img/carousel5.png" alt="Image 5"></div>
+        <div><img src="img/carousel6.png" alt="Image 6"></div>
+      </div>
+      <script>
+        $(document).ready(function () {
+          $('.carousel').slick({
+            dots: false,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            centerMode: true,
+            variableWidth: true,
+            prevArrow: '<button class="slick-prev" aria-label="Previous"><i class="fas fa-arrow-left"></i></button>',
+            nextArrow: '<button class="slick-next" aria-label="Next"><i class="fas fa-arrow-right"></i></button>',
+            responsive: [
+              {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 1,
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                }
+              }
+            ]
+          });
+        });
+      </script>
+    </section>
+
     <section class="project-details">
       <div class="project-container">
         <div class="project-image">
           <img src="https://lh3.googleusercontent.com/fife/ALs6j_E21KMYQxVBBE9FXCOgRQUxgW1Xvr7xNxfI2yQV8sGLRfhRkkb7A56jWNeT3RtCaxHLo4wPJVshZB79C-lXr7kQT-X40LPcWvQCipZmYvK4PwJr2A1BcWY4w3o5OH7_X1i-tADs1lPdEKa2RkKLOx46gydlsQr7ME6zepa__96q65gKXFxNeYblnAp1WYfkCkkxFbM3S87LjOWWKxFMWvD3BFcdPKoeKcWkFPqAuUa7WMtYpjsoGJwOZ1H2kaSApi87fNTbuNGhMrTtPROffUnBdaTYrwFccEAHydiGL5e8V7VVeYNfZubEyWFwKBS0A3sVaoTn0wIwv8ygJ16siEkFzEu72tSJrygqXgNpnOmC_jNKRP9T89CFGln2ZPNjR40N00O0VVYAoZdH07IuCJUicvXm2zz6358SouVBsL1w_wdVdK7qWkm2scBu65uEQFfNmHuzhTYwc2MO_a8VbC1ku1z0EawES9GlRa3RLepUF4xpf3rsOv6HfzlS3w0ZGGWfJMwoIGfXF0mYig245Dzd2aONy6EPOeQ55tf9QcMNh_bdsmMNCI_5rPlc4lsYtird4ZxJDDxLOVwRSOZPekpFi9kpDeKQrn4bpLBkAR5EBtjw0P2fzw0_zc6bofoDeB6_9wxM-h690FCVSFL9VV0pDZzR-S7xrblIGq1xsjG4CT1dJg-LsbCC5ChEgvwSNcl54Hnq55bI3tsi7b2doqZpUmznlHkXb8PC7d0SMTsMF03cFr0ta1cnOkDtE2KL87_QoZIhaxjRA7WYqBSruL6E0RtbLDW1Miwx9Hokzx2mQukuaBs5oWCsnrllp6jq7JW3KoxpOMjDuHyR-VP7TDpEHEX-BAU0fxDnLdAdiiQgvI17jOexXnBMr211HRPAApMBnDS6mSaclVaesbObQ5HsJEzqgmzVbIbDLm0mTEArzi6KVOM0bbGIyOLnSlaCvhnw7bLOXDOhpwW-lGKZzMmS2s9wWWne0_fjPLuPAsz_4Ebfa88_SygraCN-6HVk6JVnyi7gwj_I_B0OULrMTeCs6viunB2BGPIHc7v5QVeQ5K3qozq29UMjFbrm3TBbt_JaIo2WDxU_1s2b8ipm5wJOorsUU-AHIxdExmagSzS_7t4QnsIXrB3b4QO28B53lQ-_FQBBmxqtXxXoqeSWIaqVVlhLjzivlk8666nMG1DZOYqQl5HAf-hbxavIs6nqWZrCyS-i5uZe7KFPjn9Ry3qqJ0baXn86U8Ogv_Zq9LZwhaD3qdaGglO3PhYvb4IcKr8fGr8UJWDWwWQdbu0GYfk7cdBmTJv6oD973prMHypjylbO9R6Fb9jz9vzF3OqwXVP1zEzNveO_JLjki6vZfRJ9XTbb0lBmPdQSuKpSm6djKdQcgxBWzARhfNBHNfgYIah01GhqHCgas7q5vN_JxoRuF8Ko-ACcO2-Lc2eVMMhAuOkA9BwZeU1T1ccJJIOLkNh7K3Wtjl0OhajdhT4kIJ9254XKM558l3oJg47c0Pp20xheTLIJvtaA1BRShq5WK_6EwO1v5Jfv0yc26KeVG_gWMc2lbGCkLE6hA9uyo1xABjqt6pEGxCG1NrYdTsP5wr2uLna1nEhB9N7lFp95xLaYSO0hkixQJnKKghO5v09giDmvyf73mu-2RBcAJiM2lQBPHJQNkyuygwtS9invtD71_90=w1876-h973">
         </div>
         <div class="project-info">
-          <h2>AniUA — Application</h2>
-          <p><strong>Type:</strong> Desktop App</p>
-          <p><strong>Languages:</strong> C#, SQL</p>
-          <p><strong>Environment:</strong> Visual Studio</p>
+          <h2>AniUA</h2>
+          <p><strong>Type: </strong>Desktop App</p>
+          <p><strong>Language: </strong>C#, SQL</p>
+          <p><strong>Tools: </strong> Visual Studio</p>
     
           <h3>About the project</h3>
-          <p>
-            is a PC application for watching anime. It has a simple interface, an anime catalog, search, database, and other features.
-          </p>
+          <p>Project description: purpose, functionality, for whom.</p>
     
           <h3>What I did</h3>
           <ul>
-            <li>Implemented an interface with search and categories</li>
-            <li>Developed a local SQL database</li>
-            <li>Set up navigation in the interface</li>
+            <li>Function 1</li>
+            <li>Function 2</li>
+            <li>Function 3</li>
           </ul>
+    
+          <div class="project-links" style="margin-top: 1.5rem;">
+            <a href="../../index.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="#" class="btn btn-primary"><i class="fab fa-github"></i> GitHub</a>
+          </div>
         </div>
       </div>
     </section>
+    
+    <section class="video-section">
+      <div class="video-container">
+        <h3 style="margin-bottom: revert;">Demo / Trailer</h3>
+        <video controls="">
+          <source src="demo.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </section>
   </main>
-
-  <footer id="contact">
-    <div class="footer-content">
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=slobozhenyuk.david@gmail.com" class="btn btn-secondary"><i class="fas fa-envelope"></i>Mail</a>
-      <a href="https://github.com/9Simba9" class="btn btn-secondary"><i class="fab fa-github"></i>GitHub</a>
-      <a href="https://www.instagram.com/9_.d.a.v.i.d._9?utm_source=qr&igsh=MTA3cjg5MGplYW1kaA==" class="btn btn-secondary"><i class="fa-brands fa-instagram"></i>Instagram</a>
-      <a href="https://t.me/Davidos1k" class="btn btn-secondary"><i class="fa-brands fa-telegram"></i>Telegram</a>
-      <a href="https://www.freelancer.com/u/Simba69?sb=t" class="btn btn-secondary"><i class="fa fa-link"></i>Freelancer</a>
-      <a href="https://www.upwork.com/freelancers/~01fe14cf8ad76a3576?mp_source=share" class="btn btn-secondary"><i class="fa fa-link"></i>Upwork</a>
-      <a href="https://www.fiverr.com/s/Aylv09Y" class="btn btn-secondary"><i class="fa fa-link"></i>Fivver</a>
-    </div>
-  </footer>
 </body>
 </html>
