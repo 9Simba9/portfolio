@@ -566,7 +566,85 @@
             color: var(--secondary-color);
         }
 
-        @media (max-width: 768px) {
+        .qualification-section {
+            background-color: var(--primary-color);
+            padding: 6rem 3rem;
+          }
+
+          .education-card:hover, .certificates-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+          }
+
+          .qualification-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+          }
+
+          .education-card, .certificates-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+          }
+
+          .education-header, .certificates-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .education-item p, .certificate-item p {
+            font-weight: 500;
+          }
+
+          .education-item span, .certificate-item span {
+            color: var(--text-secondary);
+          }
+
+          .education-item h4, .certificate-item h4 {
+            color: var(--accent-color); 
+            margin-bottom: 0.5rem;
+          }
+
+          .nav-container {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+          }
+
+          .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+          }
+
+          .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+          }
+
+          .nav-link:hover {
+            color: var(--accent-color);
+          }
+
+          .nav-link:hover::after {
+            width: 100%;
+          }
+
+          @media (max-width: 768px) {
             header {
                 padding: 1rem;
             }
@@ -575,31 +653,8 @@
                 font-size: 1.5rem;
             }
             
-            nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 70%;
-                background-color: var(--secondary-color);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.5s ease;
-                z-index: 1001;
-            }
-            
-            nav.active {
-                right: 0;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            nav ul li {
-                margin: 1.5rem 0;
+            .nav-container {
+              display: none;
             }
             
             .hamburger {
@@ -662,8 +717,37 @@
             }
             
             .skill-card {
-                width: 100%;
-                max-width: 300px;
+              width: 100%;
+              max-width: 180px;
+            }
+
+            .footer-content {
+              display: flex;
+              flex-direction: row;
+              flex-wrap: wrap;
+            }
+
+            #contact .footer-content .btn-secondary {
+              margin-bottom: 16px;
+            }
+
+            .skills-container {
+              max-width: 1200px;
+              margin: 0 auto;
+              display: flex;
+              justify-content: center;
+              align-content: center;
+              align-items: center;
+              gap: 1.5rem;
+              flex-wrap: wrap;
+            }
+
+            .qualification-container {
+              grid-template-columns: 1fr;
+            }
+            
+            .qualification-section {
+              padding: 4rem 1.5rem;
             }
         }
     </style>
@@ -673,10 +757,18 @@
 
     <header>
         <a href="index.html" class="logo"><i class="fas fa-code"></i> <span>Portfolio</span></a>
+
+        <nav class="nav-container">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#qualification" class="nav-link">Qualification</a>
+          <a href="#contact" class="nav-link">Contact</a>
+      </nav>
     </header>
 
     <main>
-        <section class="hero">
+        <section id="about" class="hero">
           <img src="img/photo.png" class="profile-img">
             <h1>David Slobozhenyuk</h1>
             <p>I am a young enthusiastic programmer with experience in developing websites, PC applications, and Unity games. I have practical skills in creating a full-fledged online store, PC applications, and am also working on a Unity game. I'm looking for growth opportunities in freelancing or a Junior Developer position.</p>
@@ -832,7 +924,7 @@
             </div>
         </section>
 
-        <section class="skills-section">
+        <section id="skills" class="skills-section">
             <div class="title-container">
                 <h2 class="section-title">My skills</h2>
             </div>
@@ -886,6 +978,63 @@
                     <h3 class="skill-title">Unity</h3>
                 </a>
             </div>
+        </section>
+
+        <section id="qualification" class="qualification-section">
+          <div class="title-container">
+            <h2 class="section-title">Qualifications</h2>
+          </div>
+        
+          <div class="qualification-container">
+            <div class="education-card">
+              <div class="education-header">
+                <i class="fas fa-graduation-cap" style="font-size: 2rem; color: var(--accent-color);"></i>
+                <h3 style="font-size: 1.5rem;">Education</h3>
+              </div>
+              
+              <div class="education-item" style="margin-bottom: 1.5rem;">
+                <h4>Professional junior bachelor</h4>
+                <p>Name of the institution: <span>Separate structural unit “KF KMF and TT” of the State University of Infrastructure and Technology</span></p>
+                <p>Specialty: <span>Software engineering 121</span></p>
+                <p>Year of graduation: <span>2024</span></p>
+              </div>
+              
+              <div class="education-item">
+                <h4>Bachelor</h4>
+                <p>Name of the institution: <span>State University of Infrastructure and Technology</span></p>
+                <p>Specialty: <span>Software engineering 121</span></p>
+                <p>Years of study: <span>2024-2027</span></p>
+              </div>
+            </div>
+
+            <div class="certificates-card">
+              <div class="certificates-header">
+                <i class="fas fa-certificate" style="font-size: 2rem; color: var(--accent-color);"></i>
+                <h3 style="font-size: 1.5rem;">Certificates</h3>
+              </div>
+              
+              <div class="certificate-item" style="margin-bottom: 1.5rem;">
+                <h4>Basics of website development</h4>
+                <p>Organizer: <span>IT-Elit</span></p>
+                <p>Description: <span>This is to certify that Slobozhenyuk David has completed the course “Fundamentals of Website Development”. Has theoretical knowledge and practical skills in HTML, CSS programming languages.</span></p>
+                <p>Year: <span>2019</span></p>
+              </div>
+              
+              <div class="certificate-item" style="margin-bottom: 1.5rem;">
+                <h4>Design basics</h4>
+                <p>Organizer: <span>IT-Elit</span></p>
+                <p>Description: <span>Certifies that Slobozhenyuk David has completed the course “Fundamentals of Programming”. Has theoretical knowledge and practical skills in PHP, MySQL programming languages.</span></p>
+                <p>Year: <span>2020</span></p>
+              </div>
+              
+              <div class="certificate-item">
+                <h4>Create dynamic web pages</h4>
+                <p>Organizer: <span>IT-Elit</span></p>
+                <p>Description: <span>This is to certify that Slobozhenyuk David has completed the course “Creating Dynamic Web Pages”. Has theoretical knowledge and practical skills in working with programming languages and libraries JavaScript, jQuery, jQueryUI.</span></p>
+                <p>Year: <span>2021</span></p>
+              </div>
+            </div>
+          </div>
         </section>
     </main>
 
