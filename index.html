@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
+	<link rel="icon" type="image/svg" href="iconTab.svg">
+		
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
@@ -750,6 +752,53 @@
               padding: 4rem 1.5rem;
             }
         }
+
+
+
+
+
+
+
+
+
+
+        .section-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--card-bg);
+            border-radius: 30px;
+            background: transparent;
+            color: var(--text-color);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
+            border-color: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -783,7 +832,18 @@
 
         <section id="projects" class="featured-section">
             <div class="title-container">
-                <h2 class="section-title">Projects</h2>
+
+                <!-- Tabs -->
+                <div class="section-tabs">
+                    <button class="tab-btn active" data-tab="projects">
+                        Projects
+                    </button>
+
+                    <button class="tab-btn" data-tab="products">
+                        Products
+                    </button>
+                </div>
+
                 <div class="search-container">
                     <input type="text" class="search-input" placeholder="Search for projects...">
                     <button class="search-btn"><i class="fas fa-search"></i></button>
@@ -820,7 +880,6 @@
                 <div class="filters">
                     <button class="filter-btn active">All</button>
                     <button class="filter-btn">Web</button>
-                    <button class="filter-btn">Mobile</button>
                     <button class="filter-btn">Desktop</button>
                     <button class="filter-btn">Games</button>
 
@@ -855,74 +914,89 @@
                 </div>
             </div>
 
-            <div class="project-grid">
-                <!-- Проєкт 1 -->
-                <div class="project-card">
-                    <div class="project-img">
-                      <img src="img/project1.png">
+
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const tabs = document.querySelectorAll('.tab-btn');
+                    const tabContents = document.querySelectorAll('.tab-content');
+
+                    tabs.forEach(tab => {
+                        tab.addEventListener('click', () => {
+                            const target = tab.dataset.tab;
+
+                            tabs.forEach(btn => btn.classList.remove('active'));
+                            tab.classList.add('active');
+
+                            tabContents.forEach(content => {
+                                content.classList.toggle('active', content.id === `${target}-content`);
+                            });
+                        });
+                    });
+                });
+            </script>
+
+
+            <!-- === === === Projects === === === -->
+            <!-- === === === Projects === === === -->
+            <!-- === === === Projects === === === -->
+            <div class="tab-content active" id="projects-content">
+                <div class="project-grid">
+                    <!-- Проєкт 1 -->
+                    <div class="project-card">
+                        <div class="project-img">
+                        <img src="img/project1.png">
+                        </div>
+                        <span class="project-category">Desktop</span>
+                        <div class="project-content">
+                        <h3>AniUA application</h3>
+                        <p>A project with the ability to watch anime cartoons and anime series.</p>
+                        <div class="project-links">
+                            <a title="C#"><i class="fas fa-hashtag"></i></a>
+                            <a title="SQL"><i class="fa fa-database"></i></a>
+                            <br>
+                            <a href="projects/AniUA/index.html" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        </div>
                     </div>
-                    <span class="project-category">Desktop</span>
-                    <div class="project-content">
-                      <h3>AniUA application</h3>
-                      <p>A project with the ability to watch anime cartoons and anime series.</p>
-                      <div class="project-links">
-                        <a title="C#"><i class="fas fa-hashtag"></i></a>
-                        <a title="SQL"><i class="fa fa-database"></i></a>
-                        <br>
-                        <a href="projects/AniUA/index.html" title="Read more"><i class="fas fa-external-link-alt"></i></a>
-                      </div>
-                    </div>
+                    <!-- Майбутні проекти -->
                 </div>
 
-                <!-- Проєкт 2 -->
-                <div class="project-card">
-                    <div class="project-img">
-                      <img src="img/project2.png">
-                    </div>
-                    <span class="project-category">Games</span>
-                    <div class="project-content">
-                      <h3>Game "Adventure of lost legend"</h3>
-                      <p>A 3D Unity game with an open procedurally generated world, with RPG and survival elements.</p>
-                      <div class="project-links">
-                        <a title="C#"><i class="fas fa-hashtag"></i></a>
-                        <a title="Unity"><i class="fab fa-unity"></i></a>
-                        <br>
-                        <a href="projects/AoLL/index.html" title="Read more"><i class="fas fa-external-link-alt"></i></a>
-                      </div>
-                    </div>
+                <div class="view-all">
+                    <a href="projects.html" class="btn btn-secondary">View all projects</a>
                 </div>
-
-                <!-- Проєкт 3 -->
-                <div class="project-card">
-                  <div class="project-img">
-                    <img src="img/project3.png">
-                  </div>
-                  <span class="project-category">Web</span>
-                  <div class="project-content">
-                    <h3>Online store</h3>
-                    <pre>An online store with full functionality. 
-                      
-                    </pre>
-                    <div class="project-links">
-                      <a title="Html"><i class="fab fa-html5"></i></a>
-                      <a title="CSS"><i class="fab fa-css3"></i></a>
-                      <a title="PhP"><i class="fab fa-php"></i></a>
-                      <a title="SQL"><i class="fa fa-database"></i></a>
-                      <a title="JS"><i class="fab fa-js-square"></i></a>
-                      <a title="jQuery"><i class="fa fa-book"></i></a>
-                      <br>
-                      <a href="projects/DeShop/index.html" title="Read more"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Майбутні проекти -->
             </div>
 
-            <div class="view-all">
-                <a href="projects.html" class="btn btn-secondary">View all projects</a>
+            <!-- === === === Products === === === -->
+            <!-- === === === Products === === === -->
+            <!-- === === === Products === === === -->
+            <div class="tab-content" id="products-content">
+                <div class="project-grid">
+                    <!-- Продукт 1 -->
+                    <div class="project-card">
+                        <div class="project-img">
+                        <img src="img/project3.png">
+                        </div>
+                        <span class="project-category">3D Model</span>
+                        <div class="project-content">
+                        <h3>Dragon</h3>
+                        <p>This is a 3D model of a dragon.</p>
+                        <div class="project-links">
+                            <a title="3D Modeling"><i class="fas fa-cube"></i></a>
+                            <br>
+                            <a href="products/3D_models/index.html" title="Read more"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- Майбутні продукти -->
+                </div>
+
+                <div class="view-all">
+                    <a href="products.html" class="btn btn-secondary">View all products</a>
+                </div>
             </div>
         </section>
+
+
 
         <section id="skills" class="skills-section">
             <div class="title-container">
@@ -1042,11 +1116,6 @@
       <div class="footer-content">
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=slobozhenyuk.david@gmail.com" class="btn btn-secondary"><i class="fas fa-envelope"></i>Mail</a>
         <a href="https://github.com/9Simba9" class="btn btn-secondary"><i class="fab fa-github"></i>GitHub</a>
-        <a href="https://www.instagram.com/9_.d.a.v.i.d._9?utm_source=qr&igsh=MTA3cjg5MGplYW1kaA==" class="btn btn-secondary"><i class="fa-brands fa-instagram"></i>Instagram</a>
-        <a href="https://t.me/Davidos1k" class="btn btn-secondary"><i class="fa-brands fa-telegram"></i>Telegram</a>
-        <a href="https://www.freelancer.com/u/Simba69?sb=t" class="btn btn-secondary"><i class="fa fa-link"></i>Freelancer</a>
-        <a href="https://www.upwork.com/freelancers/~01fe14cf8ad76a3576?mp_source=share" class="btn btn-secondary"><i class="fa fa-link"></i>Upwork</a>
-        <a href="https://www.fiverr.com/s/Aylv09Y" class="btn btn-secondary"><i class="fa fa-link"></i>Fivver</a>
       </div>
     </footer>
   </div>
