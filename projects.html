@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Storm Gate Studio</title>
+  <link rel="icon" type="image/svg" href="assets/icon/iconTab.svg">
+  <meta name="description" content="Projects by David Slobozhenyuk — indie game developer and 3D artist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .pinned-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--primary);
+      letter-spacing: .2em;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pinned-label::before {
+      content: '📌';
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 56px 0;
+    }
+    .card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      background: #1a1a1a;
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .card:hover .card-img img {
+      transform: scale(1.05);
+    }
+    .nav-links a.active {
+      color: var(--primary);
+    }
+    .nav-links a.active::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<header class="nav scrolled" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-logo">S</span>
+      <span class="brand-text">STORM GATE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contacts">Contacts</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <ul class="nav-mobile" id="navMobile">
+    <li><a href="index.html#home">Home</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contacts">Contacts</a></li>
+  </ul>
+</header>
+
+<main style="padding-top: 80px;">
+  <section class="section">
+    <div class="container">
+
+      <div class="section-head reveal">
+        <p class="kicker">01 / DEV</p>
+        <h1 class="h2">Projects<span class="accent">.</span></h1>
+        <p class="muted" style="margin-top: 16px;">Games, apps and tools built under Storm Gate Studio.</p>
+      </div>
+
+      <!-- PINNED / IN PROGRESS -->
+      <div class="pinned-label reveal">PINNED — IN PROGRESS</div>
+      <div class="grid grid-2">
+
+        <article class="card reveal">
+          <div class="card-glow"></div>
+          <div class="card-img">
+            <img src="assets/projects/aoll-preview.png" alt="Adventure of Lost Legend" loading="lazy">
+          </div>
+          <div class="card-head">
+            <h3>Adventure of Lost Legend</h3>
+            <span class="badge">In Development</span>
+          </div>
+          <p class="muted">An open-world RPG inspired by Valheim — exploration, survival and immersive combat in a hand-crafted fantasy world. Ukrainian and Japanese cultural influences.</p>
+          <div class="tags">
+            <span>Unity</span><span>C#</span><span>Open World</span><span>RPG</span><span>Survival</span>
+          </div>
+          <span class="muted small">Coming soon — no public build yet</span>
+        </article>
+
+      </div>
+
+      <hr class="divider">
+
+      <!-- ALL PROJECTS -->
+      <p class="kicker reveal" style="margin-bottom: 32px;">ALL PROJECTS</p>
+      <div class="grid grid-2">
+
+        <article class="card reveal">
+          <div class="card-glow"></div>
+          <div class="card-img">
+            <img src="assets/projects/aniua-preview.png" alt="AniUA" loading="lazy">
+          </div>
+          <div class="card-head">
+            <h3>AniUA</h3>
+            <span class="badge">Released</span>
+          </div>
+          <p class="muted">Desktop anime tracker app for Ukrainian fans — manage watchlists, track progress, and rate series. Features local SQL persistence and a clean WinForms UI.</p>
+          <div class="tags">
+            <span>C#</span><span>WinForms</span><span>SQL</span><span>.NET</span>
+          </div>
+          <a class="link-arrow" href="https://github.com/9Simba9/AniUA" target="_blank" rel="noopener">View on GitHub →</a>
+        </article>
+
+        <article class="card reveal" style="--delay:.1s">
+          <div class="card-glow"></div>
+          <div class="card-img">
+            <img src="assets/projects/aoll-preview.png" alt="Adventure of Lost Legend" loading="lazy">
+          </div>
+          <div class="card-head">
+            <h3>Adventure of Lost Legend</h3>
+            <span class="badge">In Development</span>
+          </div>
+          <p class="muted">An open-world RPG inspired by Valheim — exploration, survival and immersive combat in a hand-crafted fantasy world.</p>
+          <div class="tags">
+            <span>Unity</span><span>C#</span><span>Open World</span><span>RPG</span>
+          </div>
+          <span class="muted small">Coming soon</span>
+        </article>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" style="margin-top: 0; padding: 32px 24px;">
+  © <span id="year"></span> STORM GATE STUDIO · DAVID SLOBOZHENYUK
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const burger = document.getElementById('burger');
+const navMobile = document.getElementById('navMobile');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  navMobile.classList.toggle('open');
+});
+navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  burger.classList.remove('open');
+  navMobile.classList.remove('open');
+}));
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

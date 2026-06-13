@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products | Storm Gate Studio</title>
+  <link rel="icon" type="image/svg" href="assets/icon/iconTab.svg">
+  <meta name="description" content="Game assets, 3D models, icon packs and bundles by Storm Gate Studio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="nav scrolled" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-logo">S</span>
+      <span class="brand-text">STORM GATE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contacts">Contacts</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <ul class="nav-mobile" id="navMobile">
+    <li><a href="index.html#home">Home</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contacts">Contacts</a></li>
+  </ul>
+</header>
+
+<main style="padding-top: 80px;">
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">02 / SHOP</p>
+        <h1 class="h2">Products<span class="accent">.</span></h1>
+        <p class="muted" style="margin-top: 16px;">Stylized game-ready assets for Unity, Unreal, Godot and more.</p>
+      </div>
+
+      <div class="filters reveal" id="filters">
+        <button class="filter active" data-filter="All">All</button>
+        <button class="filter" data-filter="3D Model">3D Model</button>
+        <button class="filter" data-filter="Icon Pack">Icon Pack</button>
+        <button class="filter" data-filter="Bundle">Bundle</button>
+      </div>
+
+      <div class="grid grid-3" id="productGrid">
+
+        <article class="product reveal" data-category="3D Model">
+          <div class="product-img">
+            <img src="assets/potion-models.png" alt="Fantasy Potion Models" loading="lazy">
+            <span class="price">$4</span>
+          </div>
+          <div class="product-body">
+            <span class="cat">3D Model</span>
+            <h3>Fantasy Potion Models</h3>
+            <p class="muted">15 stylized potion bottle models ready for your fantasy game. Hand-painted shading, optimized topology.</p>
+            <div class="tags small">
+              <span>Blender</span><span>FBX</span><span>OBJ</span><span>GLB</span>
+            </div>
+            <a class="btn btn-primary btn-block" href="https://9simba9.itch.io/fantasy-potion-pack-stylized-3d-assets" target="_blank" rel="noopener">Get on itch.io ↗</a>
+          </div>
+        </article>
+
+        <article class="product reveal" style="--delay:.1s" data-category="Icon Pack">
+          <div class="product-img">
+            <img src="assets/potion-icons.png" alt="Fantasy Potion Icons" loading="lazy">
+            <span class="price">$2</span>
+          </div>
+          <div class="product-body">
+            <span class="cat">Icon Pack</span>
+            <h3>Fantasy Potion Icons</h3>
+            <p class="muted">95 stylized fantasy potion icons in PNG format with transparent background. 3 colors × 3 types × 7 angles.</p>
+            <div class="tags small">
+              <span>PNG</span><span>512×512</span><span>Transparent</span>
+            </div>
+            <a class="btn btn-primary btn-block" href="https://9simba9.itch.io/fantasy-potion-icons-pack-95-png-icons" target="_blank" rel="noopener">Get on itch.io ↗</a>
+          </div>
+        </article>
+
+        <article class="product reveal" style="--delay:.2s" data-category="Bundle">
+          <div class="product-img">
+            <img src="assets/potion-pack.png" alt="Fantasy Potion Bundle" loading="lazy">
+            <span class="price">$5</span>
+          </div>
+          <div class="product-body">
+            <span class="cat">Bundle</span>
+            <h3>Fantasy Potion Bundle</h3>
+            <p class="muted">Complete collection — 15 3D models + 95 PNG icons. Save $1 vs buying separately.</p>
+            <div class="tags small">
+              <span>Blender</span><span>FBX</span><span>OBJ</span><span>GLB</span><span>PNG</span>
+            </div>
+            <a class="btn btn-primary btn-block" href="https://9simba9.itch.io/fantasy-potion-bundle-3d-2d-bundle" target="_blank" rel="noopener">Get on itch.io ↗</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" style="margin-top: 0; padding: 32px 24px;">
+  © <span id="year"></span> STORM GATE STUDIO · DAVID SLOBOZHENYUK
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const burger = document.getElementById('burger');
+const navMobile = document.getElementById('navMobile');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  navMobile.classList.toggle('open');
+});
+navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  burger.classList.remove('open');
+  navMobile.classList.remove('open');
+}));
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+const filterBtns = document.querySelectorAll('.filter');
+const products = document.querySelectorAll('#productGrid .product');
+filterBtns.forEach(btn => btn.addEventListener('click', () => {
+  filterBtns.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filter;
+  products.forEach(p => {
+    p.style.display = (f === 'All' || p.dataset.category === f) ? '' : 'none';
+  });
+}));
+</script>
+</body>
+</html>
